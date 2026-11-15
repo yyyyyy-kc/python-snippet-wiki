@@ -22,8 +22,8 @@
     <!-- Main Content: Card Grid -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow w-full mb-12">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
-            <!-- Card 1: Class 與物件導向觀念 -->
+
+            <!-- Card 1 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -31,61 +31,42 @@
                         <span class="text-xs text-slate-400">#01</span>
                     </div>
                     <h2 class="text-xl font-bold text-slate-900 mb-3">Python Class 核心用法與觀念筆記</h2>
-                    
-                    <!-- 欄位一：核心心得與功能說明 -->
                     <div class="mb-4">
-                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            Class 必須透過 <code>__init__</code> 進行初始化賦值[cite: 2]。呼叫時（如 <code>a.method(b)</code>）會自動將 <code>a</code> 傳入 <code>self</code>、<code>b</code> 傳入 <code>other</code>[cite: 2]。透過 <code>isinstance()</code> 可以安全檢查物件型態[cite: 2]。另外，子類別可以使用 <code>super().method()</code> 輕鬆繼承父類別的方法，並透過同名覆寫（Override）來自訂行為，不需要重複編寫相似代碼[cite: 2]。
-                        </p>
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">我一開始最搞不懂 <code>self</code> 是誰，後來想通了：寫 <code>a.method(b)</code> 就等於呼叫 <code>Class.method(a, b)</code>，Python 會自動把 a 塞進 <code>self</code>、b 塞進 <code>other</code>。只屬於某個物件的變數，我一定在 <code>__init__</code> 裡用 <code>self.x = ...</code> 設好。檢查型態我習慣用 <code>isinstance(物件, 類別)</code>，因為它連子類別也算。繼承時我會用 <code>super().method()</code> 沿用父類別的功能，但記得括號裡不用再寫 <code>self</code>，也只傳父類別有的參數。</p>
                     </div>
-
-                    <!-- 欄位二：輸入輸出與使用範例 -->
                     <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例
-                        </h3>
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例</h3>
                         <div class="text-xs font-mono text-slate-700 space-y-1">
-                            <div><span class="text-slate-400">Input:</span> <code>v1 = Vector(2, 3); v2 = Vector(4, 5); v3 = v1 + v2</code></div>
-                            <div><span class="text-slate-400">Output:</span> <code>Vector(6, 8)</code> (利用 <code>__add__</code> 內建方法實現)[cite: 2]</div>
+                            <div><span class="text-slate-400">Input:</span> <code>print(Vector(2, 3) + Vector(4, 5))</code></div>
+                            <div><span class="text-slate-400">Output:</span> <code>Vector(6, 8)</code></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 欄位三：完整程式碼 -->
                 <div class="bg-slate-900 text-slate-100 p-4 relative">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-xs font-mono text-slate-400">vector_demo.py</span>
-                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center">
-                            <i class="fa-regular fa-copy mr-1"></i>一鍵複製
-                        </button>
+                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center"><i class="fa-regular fa-copy mr-1"></i>一鍵複製</button>
                     </div>
                     <pre class="text-xs font-mono overflow-x-auto text-emerald-400 p-2 bg-slate-950 rounded"><code>class Vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
-    # 對應 + 運算子的內建 method
+    # v1 + v2 會自動呼叫 __add__，v1 是 self、v2 是 other
     def __add__(self, other):
         if isinstance(other, Vector):
             return Vector(self.x + other.x, self.y + other.y)
         raise TypeError("Unsupported operand type")
 
-class SpecialVector(Vector):
-    def __init__(self, x, y, label):
-        super().__init__(x, y)
-        self.label = label
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
 
-    # 覆寫 (Override) 父類別的方法
-    def __add__(self, other):
-        res = super().__add__(other)
-        return SpecialVector(res.x, res.y, self.label)</code></pre>
+print(Vector(2, 3) + Vector(4, 5))  # Vector(6, 8)</code></pre>
                 </div>
             </div>
 
-            <!-- Card 2: Sys 模組與終端機參數讀取 -->
+            <!-- Card 2 -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
@@ -93,53 +74,173 @@ class SpecialVector(Vector):
                         <span class="text-xs text-slate-400">#02</span>
                     </div>
                     <h2 class="text-xl font-bold text-slate-900 mb-3">使用 sys 模組接收命令列參數</h2>
-                    
-                    <!-- 欄位一：核心心得與功能說明 -->
                     <div class="mb-4">
-                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            透過 <code>import sys</code> 可以直接從終端機以單行指令讀取傳入的參數[cite: 2]。利用 <code>sys.argv</code> 進行切片，其中 <code>sys.argv[0]</code> 是當前執行的檔名，而 <code>sys.argv[1:]</code> 則是後續帶入的所有參數列表[cite: 2]。此外，在任何迴圈或深層邏輯中，都可以隨時呼叫 <code>sys.exit()</code> 來安全中斷整個程式的運行[cite: 2]。
-                        </p>
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">我的記法是：<code>sys.argv[0]</code> 是檔名，<code>sys.argv[1:]</code> 才是我真正傳進去的參數。踩過的坑是參數全都是字串，要拿來算數字一定得先 <code>int()</code>。參數不夠時我會直接 <code>sys.exit("用法…")</code>，不管藏在多深的迴圈裡都能一次結束整個程式，不用一層一層 return 出去。</p>
                     </div>
-
-                    <!-- 欄位二：輸入輸出與使用範例 -->
                     <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例
-                        </h3>
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例</h3>
                         <div class="text-xs font-mono text-slate-700 space-y-1">
-                            <div><span class="text-slate-400">Terminal:</span> <code>python script.py arg1 arg2</code></div>
-                            <div><span class="text-slate-400">Output:</span> <code>Arguments received: ['arg1', 'arg2']</code></div>
+                            <div><span class="text-slate-400">Terminal:</span> <code>python sys_demo.py foo 42</code></div>
+                            <div><span class="text-slate-400">Output:</span> <code>foo 的兩倍是 84</code></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- 欄位三：完整程式碼 -->
                 <div class="bg-slate-900 text-slate-100 p-4 relative">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-xs font-mono text-slate-400">sys_demo.py</span>
-                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center">
-                            <i class="fa-regular fa-copy mr-1"></i>一鍵複製
-                        </button>
+                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center"><i class="fa-regular fa-copy mr-1"></i>一鍵複製</button>
                     </div>
                     <pre class="text-xs font-mono overflow-x-auto text-emerald-400 p-2 bg-slate-950 rounded"><code>import sys
 
-def main():
-    # 檢查是否有傳入參數
-    if len(sys.argv) < 2:
-        print("Error: 請提供至少一個參數！")
-        sys.exit(1) # 中斷程式運行
-        
-    script_name = sys.argv[0]
-    parameters = sys.argv[1:]
-    
-    print(f"正在執行檔案: {script_name}")
-    print(f"收到的參數列表: {parameters}")
+if len(sys.argv) < 3:
+    sys.exit("用法: python sys_demo.py <名字> <數字>")
 
-if __name__ == "__main__":
-    main()</code></pre>
+name = sys.argv[1]
+try:
+    n = int(sys.argv[2])  # argv 都是字串，要先轉 int
+except ValueError:
+    sys.exit("第二個參數必須是整數")
+
+print(f"{name} 的兩倍是 {n * 2}")</code></pre>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-rose-100 text-rose-800 text-xs font-semibold px-2.5 py-1 rounded-full">物件導向 / 繼承</span>
+                        <span class="text-xs text-slate-400">#03</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">銀行帳戶：transfer 的 return 與失敗計數</h2>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">最容易丟分的是 <code>transfer</code>：裡面的 <code>other.deposit(n)</code> 雖然會 return True，但只回到 transfer 這一層，不會自動傳回主程式，所以後面一定要自己再寫 <code>return True</code>，不然會變 None。連續失敗次數要用兩個變數：<code>fail</code> 是目前連續失敗，成功取錢就歸零（存款不會歸零）；<code>maxfail</code> 記歷史最大值，不能重置。繼承的好處是 Savings 只要覆寫 <code>lowest()</code>，其他方法完全不用重寫。</p>
+                    </div>
+                    <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例</h3>
+                        <div class="text-xs font-mono text-slate-700 space-y-1">
+                            <div><span class="text-slate-400">Input:</span> <code>a = Account("amy", 120); b = Account("bob", 0); a.transfer(b, 50)</code></div>
+                            <div><span class="text-slate-400">Output:</span> <code>True</code>（a.balance = 70，b.balance = 50）</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-slate-100 p-4 relative">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-mono text-slate-400">account_demo.py</span>
+                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center"><i class="fa-regular fa-copy mr-1"></i>一鍵複製</button>
+                    </div>
+                    <pre class="text-xs font-mono overflow-x-auto text-emerald-400 p-2 bg-slate-950 rounded"><code>class Account:
+    def __init__(self, owner, balance):
+        self.owner, self.balance = owner, balance
+        self.fail = 0      # 目前連續失敗，成功取錢就歸零
+        self.maxfail = 0   # 歷史最大值，不會歸零
+
+    def lowest(self):
+        return 0
+
+    def deposit(self, n):
+        self.balance += n
+        return True
+
+    def withdraw(self, n):
+        if n <= 0 or self.balance - n < self.lowest():
+            self.fail += 1
+            self.maxfail = max(self.maxfail, self.fail)
+            return False
+        self.fail = 0
+        self.balance -= n
+        return True
+
+    def transfer(self, other, n):
+        if self.withdraw(n):
+            other.deposit(n)  # 這個 True 回不到主程式
+            return True       # 一定要自己再 return
+        return False
+
+class Savings(Account):
+    def lowest(self):         # 只覆寫下限，其他全繼承
+        return 100</code></pre>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-1 rounded-full">例外處理 / try-except</span>
+                        <span class="text-xs text-slate-400">#04</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">try / except 的順序與 else、finally</h2>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">我現在都照「具體的放前面、籠統的放最後」來排 except，因為 Python 會從上往下比對，<code>Exception</code> 放太前面後面就永遠輪不到。只寫 <code>except:</code> 我絕對不用，它會連 <code>KeyboardInterrupt</code>、<code>SystemExit</code> 都吞掉，出錯了也找不到原因。<code>else</code> 是「沒出錯才執行」，<code>finally</code> 則是不管怎樣都會跑。</p>
+                    </div>
+                    <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例</h3>
+                        <div class="text-xs font-mono text-slate-700 space-y-1">
+                            <div><span class="text-slate-400">Input:</span> <code>safe_div("0")</code></div>
+                            <div><span class="text-slate-400">Output:</span> <code>不能除以 0</code> 然後 <code>無論如何都執行</code></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-slate-100 p-4 relative">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-mono text-slate-400">try_demo.py</span>
+                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center"><i class="fa-regular fa-copy mr-1"></i>一鍵複製</button>
+                    </div>
+                    <pre class="text-xs font-mono overflow-x-auto text-emerald-400 p-2 bg-slate-950 rounded"><code>def safe_div(s):
+    try:
+        n = int(s)
+        q = 10 / n
+    except ValueError as e:         # 具體的放前面
+        print("不是整數:", e)
+    except ZeroDivisionError:
+        print("不能除以 0")
+    except Exception as e:          # 最後才放籠統的
+        print("其他錯誤:", type(e).__name__)
+    else:
+        print("沒出錯才執行:", q)
+    finally:
+        print("無論如何都執行")
+
+safe_div("0")</code></pre>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-sky-100 text-sky-800 text-xs font-semibold px-2.5 py-1 rounded-full">排序 / sorted</span>
+                        <span class="text-xs text-slate-400">#05</span>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900 mb-3">sort 與 sorted，還有多條件排序</h2>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>核心心得與功能說明</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">我考試時最常犯的錯是寫 <code>x = x.sort()</code>，結果 x 變成 None，因為 <code>sort()</code> 是原地排序、回傳 None；要新 list 就用 <code>sorted()</code>。排序永遠由小到大，數字想降序就在 key 加負號，像 <code>key=lambda x: (-x[1], x[0])</code> 就是「分數高到低、同分名字 a 到 z」。但字串不能加負號，這時我會分兩次排（Python 的排序是穩定的）：先排次要條件，再排主要條件。</p>
+                    </div>
+                    <div class="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                        <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-1 flex items-center"><i class="fa-solid fa-terminal text-emerald-600 mr-2"></i>輸入與輸出範例</h3>
+                        <div class="text-xs font-mono text-slate-700 space-y-1">
+                            <div><span class="text-slate-400">Input:</span> <code>[("b", 2), ("a", 2), ("c", 1)]</code></div>
+                            <div><span class="text-slate-400">Output:</span> <code>[('a', 2), ('b', 2), ('c', 1)]</code></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 text-slate-100 p-4 relative">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-mono text-slate-400">sort_demo.py</span>
+                        <button onclick="copyCode(this)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded transition flex items-center"><i class="fa-regular fa-copy mr-1"></i>一鍵複製</button>
+                    </div>
+                    <pre class="text-xs font-mono overflow-x-auto text-emerald-400 p-2 bg-slate-950 rounded"><code>nums = [3, 1, 2]
+r = nums.sort()        # r 是 None，nums 變成 [1, 2, 3]
+new = sorted([3, 1, 2])  # 回傳新 list，不動原本的
+
+pairs = [("b", 2), ("a", 2), ("c", 1)]
+# 數字高到低，同分再依名字 a → z
+print(sorted(pairs, key=lambda x: (-x[1], x[0])))</code></pre>
                 </div>
             </div>
 
@@ -156,12 +257,12 @@ if __name__ == "__main__":
         function copyCode(button) {
             const pre = button.parentElement.nextElementSibling;
             const code = pre.querySelector('code').innerText;
-            
+
             navigator.clipboard.writeText(code).then(() => {
                 const originalHTML = button.innerHTML;
                 button.innerHTML = '<i class="fa-solid fa-check mr-1 text-emerald-400"></i>已複製';
                 button.classList.add('text-emerald-400');
-                
+
                 setTimeout(() => {
                     button.innerHTML = originalHTML;
                     button.classList.remove('text-emerald-400');
