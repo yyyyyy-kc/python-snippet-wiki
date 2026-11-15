@@ -63,6 +63,9 @@ python-snippet-wiki/
 **目前已有的卡片**（新增時依序往下編號）
 - `#01` 物件導向 / Class — Python Class 核心用法與觀念筆記（`vector_demo.py`）
 - `#02` 命令列與系統 / sys — 使用 sys 模組接收命令列參數（`sys_demo.py`）
+- `#03` 物件導向 / 繼承 — 銀行帳戶：transfer 的 return 與失敗計數（`account_demo.py`）
+- `#04` 例外處理 / try-except — try / except 的順序與 else、finally（`try_demo.py`）
+- `#05` 排序 / sorted — sort 與 sorted，還有多條件排序（`sort_demo.py`）
 
 **編號規則**
 - 編號為兩位數、依新增順序遞增（`#03`、`#04`…），不得重複或跳號。
