@@ -25,9 +25,9 @@
 - **單一頁面**：所有內容都寫在 `index.html`，卡片直接以 HTML 撰寫，**不使用外部資料檔、不使用 `fetch`**，確保雙擊 `index.html` 就能在本機開啟。
 - **部署方式**：直接推送到 **GitHub Pages**（`main` 分支根目錄）即可瀏覽。所有資源路徑使用**相對路徑**。
 - **依賴套件（CDN）**：
-  - CSS：Tailwind CSS
-  - 程式碼高亮：Prism.js 或 Highlight.js（若頁面已使用，沿用現有的，不要換）
-  - 圖標（選用）：Lucide Icons 或 FontAwesome
+  - CSS：Tailwind CSS
+  - 程式碼高亮：Prism.js 或 Highlight.js（若頁面已使用，沿用現有的，不要換）
+  - 圖標（選用）：Lucide Icons 或 FontAwesome
 - **相容性**：支援最新版 Chrome / Edge / Safari / Firefox；需 RWD（手機寬度也能正常閱讀）。
 
 ---
@@ -36,9 +36,8 @@
 
 ```text
 python-snippet-wiki/
-├── AGENTS.md      # 本專案的 AI 開發規範文件（本檔）
-├── index.html     # 唯一頁面：標題 + 卡片 Grid + 頁尾
-└── README.md      # 專案簡介與網址（選用，建議補上）
+├── AGENTS.md      # 本專案的 AI 開發規範文件（本檔）
+├── index.html     # 唯一頁面：標題 + 卡片 Grid + 頁尾
 ```
 
 **規則**
@@ -75,23 +74,23 @@ python-snippet-wiki/
 
 ```html
 <article class="rounded-xl border bg-white p-6 shadow-sm">
-  <p class="text-sm text-indigo-600">分類 / 主題 #03</p>
-  <h2 class="mt-1 text-xl font-bold">卡片標題</h2>
+  <p class="text-sm text-indigo-600">分類 / 主題 #03</p>
+  <h2 class="mt-1 text-xl font-bold">卡片標題</h2>
 
-  <h3 class="mt-4 font-semibold">核心心得與功能說明</h3>
-  <p class="mt-1 text-gray-700">我之前以為……，後來發現……</p>
+  <h3 class="mt-4 font-semibold">核心心得與功能說明</h3>
+  <p class="mt-1 text-gray-700">我之前以為……，後來發現……</p>
 
-  <h3 class="mt-4 font-semibold">輸入與輸出範例</h3>
-  <p class="text-sm">Input: <code>…</code></p>
-  <p class="text-sm">Output: <code>…</code></p>
+  <h3 class="mt-4 font-semibold">輸入與輸出範例</h3>
+  <p class="text-sm">Input: <code>…</code></p>
+  <p class="text-sm">Output: <code>…</code></p>
 
-  <div class="mt-4 rounded-lg bg-gray-900 text-gray-100">
-    <div class="flex justify-between px-4 py-2 text-xs">
-      <span>demo_name.py</span>
-      <button type="button" aria-label="複製程式碼">一鍵複製</button>
-    </div>
-    <pre><code class="language-python"># 程式碼放這裡</code></pre>
-  </div>
+  <div class="mt-4 rounded-lg bg-gray-900 text-gray-100">
+    <div class="flex justify-between px-4 py-2 text-xs">
+      <span>demo_name.py</span>
+      <button type="button" aria-label="複製程式碼">一鍵複製</button>
+    </div>
+    <pre><code class="language-python"># 程式碼放這裡</code></pre>
+  </div>
 </article>
 ```
 
@@ -103,7 +102,6 @@ python-snippet-wiki/
 - 用**第一人稱**與口語繁體中文：「我之前以為…，後來發現…」「我現在的習慣是…」。
 - 至少包含一項：**為什麼這樣寫 / 我的理解 / 和其他寫法的比較 / 踩過的坑**。
 - **禁止**：整段複製官方文件、教科書式定義、空泛形容（「非常強大」「十分方便」）、純翻譯式語句。
-- **禁止留下 AI 工具的引用標記**，例如 `[cite: 2]`、`[1]`、`【來源】`。新增或修改後請搜尋 `cite` 確認沒有殘留。
 - 長度 3–5 句。
 
 ### 5.2 程式碼的寫法
@@ -150,7 +148,7 @@ python-snippet-wiki/
 - [ ] 雙擊 `index.html` 可正常開啟，瀏覽器 Console 沒有錯誤
 - [ ] 所有路徑為相對路徑
 - [ ] 卡片編號連續、區塊順序符合 §4
-- [ ] 頁面中沒有 `[cite: …]` 之類的殘留標記
+
 - [ ] 程式碼可執行，「一鍵複製」按鈕有效
 - [ ] 手機寬度排版正常
 - [ ] 心得語氣符合 §5.1（第一人稱、口語）
@@ -178,10 +176,10 @@ python-snippet-wiki/
 
 - **部署**：GitHub → Settings → Pages → Source 選 `main` / `(root)`，網址為 https://yyyyyy-kc.github.io/python-snippet-wiki/ 。
 - **Commit 訊息**（繁體中文，前綴分類）：
-  - `新增：#03 檔案讀寫卡片`
-  - `修改：調整卡片間距`
-  - `文件：更新 AGENTS.md 卡片清單`
-  - `修正：移除殘留的 cite 標記`
+  - `新增：#03 檔案讀寫卡片`
+  - `修改：調整卡片間距`
+  - `文件：更新 AGENTS.md 卡片清單`
+  - `修正：移除殘留的 cite 標記`
 - **分支**：個人專案可直接使用 `main`。
 
 ---
